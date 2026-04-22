@@ -9,7 +9,7 @@ if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR);
 
 let globalStyles = "";
 
-function processCSS(html, cdsBlocks = []) {
+function processCSS(html, desBlocks = []) {
     // Sucht nach <@css>...</@css> ODER <@css />
     const cssRegex = /<@css>([\s\S]*?)<\/ @css>|<@css\s*\/?>/g;
     let match;
@@ -27,9 +27,9 @@ function processCSS(html, cdsBlocks = []) {
         const fullMatch = m[0];
         const matchIndex = m.index;
 
-        // Falls kein Inline-CSS da ist, nimm den nächsten Block aus der .cds
-        if (!cssContent && cdsBlocks.length > 0) {
-            cssContent = cdsBlocks[i] || "";
+        // Falls kein Inline-CSS da ist, nimm den nächsten Block aus der .des
+        if (!cssContent && desBlocks.length > 0) {
+            cssContent = desBlocks[i] || "";
         }
 
         if (!cssContent) {
@@ -100,18 +100,18 @@ function processCSS(html, cdsBlocks = []) {
 function parseTTH(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8');
     const name = path.basename(filePath, '.tth');
-    const cdsPath = filePath.replace('.tth', '.cds');
-    let cdsBlocks = [];
+    const desPath = filePath.replace('.tth', '.des');
+    let desBlocks = [];
 
-    if (fs.existsSync(cdsPath)) {
-        const cdsContent = fs.readFileSync(cdsPath, 'utf-8');
+    if (fs.existsSync(desPath)) {
+        const desContent = fs.readFileSync(desPath, 'utf-8');
         let current = "";
         let depth = 0;
         let inBlock = false;
         
-        for (let i = 0; i < cdsContent.length; i++) {
-            const char = cdsContent[i];
-            if (!inBlock && cdsContent.substring(i, i + 4) === "@css") {
+        for (let i = 0; i < desContent.length; i++) {
+            const char = desContent[i];
+            if (!inBlock && desContent.substring(i, i + 4) === "@css") {
                 inBlock = true;
                 i += 3; // Überspringe @css
                 continue;
@@ -124,7 +124,7 @@ function parseTTH(filePath) {
                     depth--;
                     if (depth > 0) current += char;
                     else {
-                        cdsBlocks.push(current.trim());
+                        desBlocks.push(current.trim());
                         current = "";
                         inBlock = false;
                     }
@@ -157,7 +157,7 @@ function parseTTH(filePath) {
         .replace(/<action.*?>[\s\S]*?<\/action>/g, '')
         .trim();
     
-    template = processCSS(template, cdsBlocks);
+    template = processCSS(template, desBlocks);
 
     const methodStrings = Object.entries(methods)
         .map(([k, v]) => `${k}: function() { ${v} }`).join(',\n        ');
