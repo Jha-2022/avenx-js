@@ -55,7 +55,8 @@ class AvenxCLI {
         const dirs = [
             'src/components',
             'src/global',
-            'dist'
+            'dist',
+            '.vscode'
         ];
 
         dirs.forEach(dir => {
@@ -65,6 +66,21 @@ class AvenxCLI {
                 console.log(`  Created: ${dir}`);
             }
         });
+
+        // Create initial .vscode files
+        const jsConfigPath = path.join(this.baseDir, '.vscode/jsconfig.json');
+        if (!fs.existsSync(jsConfigPath)) {
+            const template = fs.readFileSync(path.join(this.frameworkDir, 'templates/vscode/jsconfig.json.template'), 'utf-8');
+            fs.writeFileSync(jsConfigPath, template);
+            console.log('  Created: .vscode/jsconfig.json');
+        }
+
+        const settingsPath = path.join(this.baseDir, '.vscode/settings.json');
+        if (!fs.existsSync(settingsPath)) {
+            const template = fs.readFileSync(path.join(this.frameworkDir, 'templates/vscode/settings.json.template'), 'utf-8');
+            fs.writeFileSync(settingsPath, template);
+            console.log('  Created: .vscode/settings.json');
+        }
 
         // Create initial index.html
         const indexHtmlPath = path.join(this.baseDir, 'index.html');
