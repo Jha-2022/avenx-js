@@ -4,9 +4,18 @@
   "description": "A lightweight reactive framework with scoped CSS and custom components.",
   "main": "lib/compiler.js",
   "exports": {
-    ".": "./lib/compiler.js",
-    "./runtime": "./lib/core/index.js",
-    "./core": "./lib/core/index.js"
+    ".": {
+      "types": "./lib/compiler.d.ts",
+      "default": "./lib/compiler.js"
+    },
+    "./runtime": {
+      "types": "./lib/core/index.d.ts",
+      "default": "./lib/core/index.js"
+    },
+    "./core": {
+      "types": "./lib/core/index.d.ts",
+      "default": "./lib/core/index.js"
+    }
   },
   "bin": {
     "avenx": "bin/avenx.js"
