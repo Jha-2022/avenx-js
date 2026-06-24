@@ -29,18 +29,25 @@ export class AvenxComponent {
     state: Record<string, any>;
 
     /**
+     * The reactive props of the component.
+     */
+    props: Record<string, any>;
+
+    /**
      * @param initialState Initial component state variables.
      * @param computed Map of computed properties to their expression strings.
      * @param bridges Global reactive bridges injected into this component.
      * @param template Compiled HTML template string.
      * @param methods Component action methods.
+     * @param props Input properties passed down from parent.
      */
     constructor(
         initialState?: Record<string, any>,
         computed?: Record<string, string>,
         bridges?: Record<string, any>,
         template?: string,
-        methods?: Record<string, string | Function>
+        methods?: Record<string, string | Function>,
+        props?: Record<string, any>
     );
 
     /**
@@ -63,6 +70,12 @@ export class AvenxComponent {
      * Unmounts the component from the DOM and runs lifecycle cleanup.
      */
     unmount(): void;
+
+    /**
+     * Updates the component's props and triggers an update if they changed.
+     * @param newProps The new props to apply.
+     */
+    setProps(newProps: Record<string, any>): void;
 
     /**
      * Component mount lifecycle hook (action).
@@ -124,7 +137,8 @@ export class AvenxPage extends AvenxComponent {
         bridges?: Record<string, any>,
         template?: string,
         methods?: Record<string, string | Function>,
-        componentRegistry?: Map<string, typeof AvenxComponent>
+        componentRegistry?: Map<string, typeof AvenxComponent>,
+        props?: Record<string, any>
     );
 }
 
