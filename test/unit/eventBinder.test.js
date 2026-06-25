@@ -17,6 +17,12 @@ try {
             tagName,
             attributes: Object.entries(attributes).map(([name, value]) => ({ name, value })),
             children,
+            hasAttribute(name) {
+                return Object.keys(attributes).includes(name);
+            },
+            getAttribute(name) {
+                return attributes[name] !== undefined ? attributes[name] : null;
+            },
             addEventListener(event, callback) {
                 listeners[event] = callback;
             },
@@ -39,13 +45,32 @@ try {
                 }
                 return [];
             },
-            // Test helper to trigger events
-            trigger(event, data) {
-                if (listeners[event]) {
-                    listeners[event](data);
+            // Test helper to trigger events with bubbling support
+            trigger(event, data = {}) {
+                if (!Object.prototype.hasOwnProperty.call(data, 'target')) {
+                    Object.defineProperty(data, 'target', {
+                        value: this,
+                        enumerable: false,
+                        writable: true,
+                        configurable: true
+                    });
                 }
-            }
+                let current = this;
+                while (current) {
+                    if (current.listeners && current.listeners[event]) {
+                        current.listeners[event](data);
+                    }
+                    if (data.cancelBubble) {
+                        break;
+                    }
+                    current = current.parentNode;
+                }
+            },
+            listeners
         };
+        children.forEach(child => {
+            child.parentNode = element;
+        });
         return element;
     }
 
