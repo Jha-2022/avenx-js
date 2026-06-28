@@ -2,13 +2,11 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-const base = process.env.BASE_PATH || (process.env.GITHUB_ACTIONS ? '/avenx-js' : '/');
-
 export default defineConfig({
-	site: 'https://avenx-js.github.io',
-	base,
+	site: 'https://docs.avenx-js.com',
+	base: '/',
 	redirects: {
-		'/': base === '/' ? '/getting-started/intro' : `${base}/getting-started/intro`,
+		'/': '/getting-started/intro',
 	},
 	integrations: [
 		starlight({
