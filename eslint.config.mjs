@@ -84,5 +84,15 @@ export default [
       "jsdoc/check-types": "off",
       "jsdoc/escape-inline-tags": "off"
     }
+  },
+  {
+    files: ["test/**/*.js", "bin/**/*.js"],
+    rules: {
+      "jsdoc/require-jsdoc": "off",
+      "jsdoc/require-param": "off",
+      "jsdoc/check-param-names": "off",
+      "jsdoc/require-param-type": "off",
+      "jsdoc/require-returns-type": "off"
+    }
   }
 ];
