@@ -32,6 +32,7 @@ Every contribution — whether code, documentation, or ideas — helps move the 
 - [@Abhijay-29r](https://github.com/Abhijay-29r)
 - [@muskaan-255](https://github.com/muskaan-255)
 - [@Avi6969-git](https://github.com/Avi6969-git)
+- [@finiteskills](https://github.com/finiteskills)
 
 ---
 
