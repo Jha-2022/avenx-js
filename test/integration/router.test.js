@@ -121,6 +121,8 @@ import { AvenxPage } from '../../lib/core/runtime/AvenxPage.js';
     }
 
     app.initRouter({
+      '': 'TestPage',
+      '#': 'TestPage',
       '#/': 'TestPage',
       '#/items*': 'TestPage',
       '#/user/:userId': {
