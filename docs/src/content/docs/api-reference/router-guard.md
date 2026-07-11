@@ -57,7 +57,11 @@ This lifecycle method is executed prior to entering a route.
 * **Return Values:** The method can return a `boolean`, a `string` (redirect path), or a `Promise` resolving to either:
   * `true`: Allows the navigation to proceed.
   * `false`: Cancels the navigation.
-  * `string`: Redirects the user to the specified path/hash (e.g., `'/login'`).
+  * `string`: Redirects the user to the specified path/hash (e.g., `'#/login'`).
+
+:::caution
+Redirect paths returned from `canActivate` must start with `#`. `AvenxRouter.navigate` only applies the configured `prefix` and namespace settings to hash paths — a path without the `#` prefix bypasses this resolution and can break navigation in apps served with a custom `prefix`.
+:::
 
 #### Sample Guard Implementation
 
@@ -70,7 +74,7 @@ export class AuthGuard extends AvenxGuard {
     
     if (!isAuthenticated) {
       // Redirect unauthenticated users to the login hash
-      return '/login'; 
+      return '#/login'; 
     }
     
     return true; // Allow navigation
